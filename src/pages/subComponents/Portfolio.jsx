@@ -9,7 +9,7 @@ export default function Portfolio({showNav}) {
     const [viewAll, setViewAll] = useState(true);
     const getMyProjects = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/v1/project/getall", { withCredentials: true });
+            const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/project/getall", { withCredentials: true });
             setProjects(response?.data?.project)
         } catch (error) {
             console.log(error)

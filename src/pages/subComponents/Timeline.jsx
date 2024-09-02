@@ -11,7 +11,7 @@ export default function Timeline() {
 
     const getMyTimeline = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/v1/timeline/getall",
+            const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/timeline/getall",
                 { withCredentials: true }
             );
             console.log(response)

@@ -7,7 +7,7 @@ export default function MyApps() {
     const[apps,setApps]=useState([])
     const getMyApps=async()=>
     {
-        const response=await axios.get("http://localhost:3000/api/v1/softwareapplication/getall", { withCredentials: true });
+        const response=await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/softwareapplication/getall", { withCredentials: true });
         setApps(response?.data?.softwareapplications)
     }
     useEffect(()=>

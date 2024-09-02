@@ -16,7 +16,7 @@ export default function Hero() {
     const { isDark, setIsDark } = useThemeContext()
     const getMyProfile = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/v1/user/portfolio/me", { withCredentials: true });
+            const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/user/portfolio/me", { withCredentials: true });
             //console.log(response)
             setUser(response?.data?.user);
         } catch (error) {
