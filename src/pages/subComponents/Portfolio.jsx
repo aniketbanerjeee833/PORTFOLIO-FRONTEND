@@ -2,7 +2,7 @@ import React from 'react'
 import axios from "axios"
 import { useEffect } from 'react';
 import { useState } from 'react';
-import {Link} from "react-router-dom"
+import {NavLink} from "react-router-dom"
 
 export default function Portfolio({showNav}) {
     const [projects, setProjects] = useState([])
@@ -10,6 +10,7 @@ export default function Portfolio({showNav}) {
     const getMyProjects = async () => {
         try {
             const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/project/getall", { withCredentials: true });
+            //console.log(response)
             setProjects(response?.data?.project)
         } catch (error) {
             console.log(error)
@@ -19,7 +20,7 @@ export default function Portfolio({showNav}) {
     useEffect(() => {
         getMyProjects()
     }, [])
-    //console.log(projects)
+    console.log(projects)
     return (
 
         <div className="w-full flex flex-col gap-8 mt-8 text-[2rem] justify-center items-center ">
@@ -31,20 +32,21 @@ export default function Portfolio({showNav}) {
             </h1>
             <div className='grid grid-cols-1  md:grid-cols-3 gap-4'>
                 {viewAll ? (projects && projects?.map((element) => {
-                   
+                   const{_id}=element
                     return (
                         
-                            <Link to={`/project/${element._id}`} target="_blank" key={element._id} >
+                            <NavLink to={`/project/${_id}`} target="_blank" key={element._id} >
                                 <img
                                     src={element?.projectBanner && element.projectBanner?.url}
                                     alt={element.title} className=' border-2 border-slate-200 w-full h-72'/>
-                            </Link>
+                            </NavLink>
                         
                     )
                 })) : (projects && projects.slice(0, 9)?.map((element) => {
+                    const{_id}=element
                     return (
-                        
-                            <Link to={`/project/${element._id}`} key={element._id}>
+
+                            <Link to={`/project/${_id}`} key={element._id}>
                                 <img
                                     src={element.projectBanner && element.projectBanner.url}
                                     alt={element.title}

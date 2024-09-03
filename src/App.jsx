@@ -5,7 +5,7 @@ import Home from './pages/Home'
 import ProjectView from './pages/ProjectView'
 import {ToastContainer} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
-import Header from './pages/subComponents/Header'
+
 import "./App.css"
 export default function App() {
 
