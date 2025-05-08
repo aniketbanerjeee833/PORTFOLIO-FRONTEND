@@ -14,9 +14,10 @@ export default function Hero() {
    
 
     const { isDark, setIsDark } = useThemeContext()
+    const[showResume,setShowResume]=useState(false)
     const getMyProfile = async () => {
         try {
-            const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/user/portfolio/me", { withCredentials: true });
+            const response = await axios.get(" https://portfolio-backend-td74.onrender.com/api/v1/user/portfolio/me", { withCredentials: true });
             //console.log(response)
             setUser(response?.data?.user);
         } catch (error) {
@@ -26,7 +27,9 @@ export default function Hero() {
     useEffect(() => {
         getMyProfile()
     }, [])
-    //console.log(user)
+    console.log("user",user)
+    
+  const resumeUrl = user?.resume?.url ? user.resume.url + "#toolbar=0" : null;
 
     return (
         <>
@@ -52,9 +55,14 @@ export default function Hero() {
                 <div className="w-fit px-5 py-2 bg-slate-50 rounded-[20px] flex gap-5 items-center mt-4  md:mt-8 lg:mt-10">
 
 
-                    <Link to={user?.linkedInURL} target="_blank" className='cursor-pointer'>
-                        <Linkedin className="text-sky-500 w-7 h-7" />
-                    </Link>
+                <Link
+  to={user?.linkedInURL?.startsWith('http') ? user.linkedInURL : `https://${user?.linkedInURL}`}
+  target="_blank"
+  className="cursor-pointer"
+>
+  <Linkedin className="text-sky-500 w-7 h-7" />
+</Link>
+
 
 
 
@@ -67,12 +75,45 @@ export default function Hero() {
 
 
 
-                    <Link to={user?.resume && user?.resume?.url} target="_blank" className='cursor-pointer border-2 border-black'>
+                    {/* <Link to={user?.resume && user?.resume?.url} target="_blank" className='cursor-pointer border-2 border-black'>
                         <button className='flex flex-row items-center'>
                             <ExternalLink className={`${isDark ? "bg-slate-900 text-white" : "bg-slate-100 text-black"}`} />
                             <span className={`${isDark ? "bg-slate-900 text-white" : "bg-slate-100 text-black"}`}>Resume </span>
                         </button>
-                    </Link>
+                    </Link> */}
+                    {resumeUrl && (
+            <>
+              <button
+                onClick={() => setShowResume(true)}
+                className="flex flex-row items-center text-blue-600 underline"
+              >
+                <ExternalLink className="text-blue-600" />
+                <span className="ml-1">Resume</span>
+              </button>
+
+              {showResume && (
+  <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div className="bg-white w-[30%] h-[95%] p-4 rounded-lg relative shadow-lg overflow-hidden">
+      <button
+        onClick={() => setShowResume(false)}
+        className="absolute top-2 right-2 text-black text-2xl font-bold z-10"
+      >
+        ✕
+      </button>
+
+      <div className="h-full overflow-auto flex justify-center items-start">
+        <img
+          src={user.resume.url}
+          alt="Resume Preview"
+          className="object-contain max-h-full"
+        />
+      </div>
+    </div>
+  </div>
+)}
+
+            </>
+          )}
 
 
                 </div>

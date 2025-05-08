@@ -3,19 +3,20 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 import axios from "axios"
+import { useThemeContext } from '../../context';
 
 export default function Timeline() {
 
     const [timeline, setTimeline] = useState([]);
-
+    const { isDark, setIsDark } = useThemeContext()
 
     const getMyTimeline = async () => {
         try {
-            const response = await axios.get("https://portfolio-backend-td74.onrender.com/api/v1/timeline/getall",
+            const response = await axios.get(" https://portfolio-backend-td74.onrender.com/api/v1/timeline/getall",
                 { withCredentials: true }
             );
             console.log(response)
-            setTimeline(response?.data?.timeline);
+            setTimeline(response?.data?.timeline.reverse());
         } catch (error) {
             console.log(error)
         }
@@ -43,7 +44,7 @@ export default function Timeline() {
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </span>
-                            <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                            <h3 className={`mb-1 text-lg font-semibold ${isDark ? "bg-slate-900 text-white" : "bg-slate-100 text-black"}`}>
                                 {element?.title}
                             </h3>
                             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
